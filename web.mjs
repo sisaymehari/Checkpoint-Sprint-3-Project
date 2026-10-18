@@ -28,13 +28,31 @@ const monthNames = [
 
 const currentMonthString = monthNames[currentMonth];
 
-function showHeader(month, year) {
+function showHeader(year, month) {
   const header = document.createElement("h1");
   header.textContent = `${month} ${year}`;
   calendar.appendChild(header);
 }
+function makeCalendarBoxes(year, month) {
+  const emptyBoxes = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  for (let i = 1; i <= emptyBoxes; i++) {
+    const emptyBox = document.createElement("div");
+    emptyBox.classList.add("empty-box");
+    calendar.appendChild(emptyBox);
+  }
+  for (let i = 1; i <= daysInMonth; i++) {
+    const dayBox = document.createElement("div");
+    dayBox.classList.add("day-box");
+    dayBox.textContent = i;
+    calendar.appendChild(dayBox);
+  }
+}
 window.onload = function () {
-  showHeader(currentMonthString, currentYear);
+  showHeader(currentYear, currentMonthString);
+  makeCalendarBoxes(currentYear, currentMonth);
+
   //   document.querySelector("body").innerText =
   //     `${getGreeting()} - there are ${daysData.length} known days`;
 };
