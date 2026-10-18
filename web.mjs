@@ -6,6 +6,29 @@
 import { getGreeting } from "./common.mjs";
 import daysData from "./days.json" with { type: "json" };
 
-window.onload = function() {
-    document.querySelector("body").innerText = `${getGreeting()} - there are ${daysData.length} known days`;
-}
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth();
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const currentMonthString = monthNames[currentMonth];
+console.log(currentMonthString);
+
+window.onload = function () {
+  document.querySelector("body").innerText =
+    `${getGreeting()} - there are ${daysData.length} known days`;
+};
