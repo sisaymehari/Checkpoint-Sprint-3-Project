@@ -34,19 +34,23 @@ function showHeader(year, month) {
   calendar.appendChild(header);
 }
 function makeCalendarBoxes(year, month) {
+  const boxesContainer = document.createElement("div");
+  boxesContainer.classList.add("boxes-container");
+  calendar.appendChild(boxesContainer);
+
   const emptyBoxes = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   for (let i = 1; i <= emptyBoxes; i++) {
     const emptyBox = document.createElement("div");
     emptyBox.classList.add("empty-box");
-    calendar.appendChild(emptyBox);
+    boxesContainer.appendChild(emptyBox);
   }
   for (let i = 1; i <= daysInMonth; i++) {
     const dayBox = document.createElement("div");
     dayBox.classList.add("day-box");
     dayBox.textContent = i;
-    calendar.appendChild(dayBox);
+    boxesContainer.appendChild(dayBox);
   }
 }
 window.onload = function () {
