@@ -3,22 +3,13 @@
 // Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
 // You can't open the index.html file using a file:// URL.
 import daysData from "./days.json" with { type: "json" };
-import { MONTH_NAMES } from "./common.mjs";
+import { MONTH_NAMES, DAY_NAMES } from "./common.mjs";
 const calendar = document.querySelector("#calendar");
 
 const now = new Date();
 const currentYear = now.getFullYear();
 const currentMonth = now.getMonth();
 
-const weekDays = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 const currentMonthString = MONTH_NAMES[currentMonth];
 
 function showHeader(year, month) {
@@ -32,7 +23,7 @@ function makeWeekDayBoxes() {
   weekRow.classList.add("week-row");
   calendar.appendChild(weekRow);
 
-  weekDays.forEach((day) => {
+  DAY_NAMES.forEach((day) => {
     const weekDayBox = document.createElement("div");
     weekDayBox.textContent = day;
     weekDayBox.classList.add("week-day-box");
