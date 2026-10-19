@@ -1,7 +1,3 @@
-// This is a placeholder file which shows how you can access functions and data defined in other files.
-// It can be loaded into index.html.
-// Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
-// You can't open the index.html file using a file:// URL.
 import daysData from "./days.json" with { type: "json" };
 import { MONTH_NAMES, DAY_NAMES } from "./common.mjs";
 const calendar = document.querySelector("#calendar");
@@ -10,12 +6,12 @@ const now = new Date();
 const currentYear = now.getFullYear();
 const currentMonth = now.getMonth();
 
-const currentMonthString = MONTH_NAMES[currentMonth];
+const currentMonthName = MONTH_NAMES[currentMonth];
 
-function showHeader(year, month) {
+function showHeader(year, monthName) {
   const header = document.createElement("h1");
   calendar.appendChild(header);
-  header.textContent = `${month} ${year}`;
+  header.textContent = `${monthName} ${year}`;
 }
 
 function makeWeekDayBoxes() {
@@ -36,15 +32,15 @@ function makeCalendarBoxes(year, month) {
   boxesContainer.classList.add("boxes-container");
   calendar.appendChild(boxesContainer);
 
-  const emptyBoxes = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const emptyBoxCount = new Date(year, month, 1).getDay();
+  const dayCount = new Date(year, month + 1, 0).getDate();
 
-  for (let i = 1; i <= emptyBoxes; i++) {
+  for (let i = 1; i <= emptyBoxCount; i++) {
     const emptyBox = document.createElement("div");
     emptyBox.classList.add("empty-box");
     boxesContainer.appendChild(emptyBox);
   }
-  for (let i = 1; i <= daysInMonth; i++) {
+  for (let i = 1; i <= dayCount; i++) {
     const dayBox = document.createElement("div");
     dayBox.classList.add("day-box");
     dayBox.textContent = i;
@@ -53,7 +49,7 @@ function makeCalendarBoxes(year, month) {
 }
 
 window.onload = function () {
-  showHeader(currentYear, currentMonthString);
+  showHeader(currentYear, currentMonthName);
   makeWeekDayBoxes();
   makeCalendarBoxes(currentYear, currentMonth);
 };
