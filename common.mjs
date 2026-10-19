@@ -13,7 +13,7 @@ export const MONTH_NAMES = [
   "December",
 ];
 
-const DAY_NAMES = [
+export const DAY_NAMES = [
   "Sunday",
   "Monday",
   "Tuesday",
