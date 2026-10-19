@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import test from "node:test";
-import { getAllEvents, getDayOfMonth, getDaysInMonth } from "./common.mjs";
+import { getAllEvents, getDayOfMonth, getCommemorativeDays } from "./common.mjs";
 import daysData from "./days.json" with { type: "json" };
 test("finds the second Tuesday of October", () => {
   assert.equal(getDayOfMonth(2024, "October", "Tuesday", "second"), 8);
@@ -22,7 +22,7 @@ test("works when the 1st or the last day is the weekday we want", () => {
 });
 
 test("lists the special days of one month", () => {
-  assert.deepEqual(getDaysInMonth(2024, "October", daysData), [
+  assert.deepEqual(getCommemorativeDays(2024, "October", daysData), [
     { name: "Ada Lovelace Day", day: 8 },
     { name: "World Lemur Day", day: 25 },
   ]);
@@ -45,7 +45,7 @@ test("shows a day that was added to the data file", () => {
     dayName: "Sunday",
     occurrence: "first",
   };
-  assert.deepEqual(getDaysInMonth(2025, "May", [dawnChorusDay]), [
+  assert.deepEqual(getCommemorativeDays(2025, "May", [dawnChorusDay]), [
     { name: "International Dawn Chorus Day", day: 4 },
   ]);
 });

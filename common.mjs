@@ -40,7 +40,7 @@ export function getDayOfMonth(year, monthName, dayName, occurrence) {
   return 1 + daysForward + 7 * OCCURRENCES.indexOf(occurrence);
 }
 
-export function getDaysInMonth(year, monthName, days) {
+export function getCommemorativeDays(year, monthName, days) {
   return days
     .filter((day) => day.monthName === monthName)
     .map((day) => ({
@@ -59,11 +59,13 @@ export function getAllEvents(firstYear, lastYear, days) {
         year,
         day.monthName,
         day.dayName,
-        day.occurrence,
+        day.occurrence
       );
       events.push({
         name: day.name,
-        date: `${year}-${String(month).padStart(2, "0")}-${String(dayOfMonth).padStart(2, "0")}`,
+        date: `${year}-${String(month).padStart(2, "0")}-${String(
+          dayOfMonth
+        ).padStart(2, "0")}`,
       });
     });
   }
