@@ -38,7 +38,9 @@ export function getDayOfMonth(year, monthName, dayName, occurrence) {
   const firstWeekday = new Date(Date.UTC(year, month, 1)).getUTCDay();
   const daysForward = (weekday - firstWeekday + 7) % 7;
   return 1 + daysForward + 7 * OCCURRENCES.indexOf(occurrence);
-}export function getDaysInMonth(year, monthName, days) {
+}
+
+export function getDaysInMonth(year, monthName, days) {
   return days
     .filter((day) => day.monthName === monthName)
     .map((day) => ({
