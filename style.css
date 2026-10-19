@@ -1,4 +1,5 @@
-.boxes-container {
+.boxes-container,
+.week-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }

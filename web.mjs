@@ -26,13 +26,36 @@ const monthNames = [
   "December",
 ];
 
+const weekDays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 const currentMonthString = monthNames[currentMonth];
 
 function showHeader(year, month) {
   const header = document.createElement("h1");
-  header.textContent = `${month} ${year}`;
   calendar.appendChild(header);
+  header.textContent = `${month} ${year}`;
 }
+
+function makeWeekDayBoxes() {
+  const weekRow = document.createElement("div");
+  weekRow.classList.add("week-row");
+  calendar.appendChild(weekRow);
+
+  weekDays.forEach((day) => {
+    const weekDayBox = document.createElement("div");
+    weekDayBox.textContent = day;
+    weekDayBox.classList.add("week-day-box");
+    weekRow.appendChild(weekDayBox);
+  });
+}
+
 function makeCalendarBoxes(year, month) {
   const boxesContainer = document.createElement("div");
   boxesContainer.classList.add("boxes-container");
@@ -53,10 +76,9 @@ function makeCalendarBoxes(year, month) {
     boxesContainer.appendChild(dayBox);
   }
 }
+
 window.onload = function () {
   showHeader(currentYear, currentMonthString);
+  makeWeekDayBoxes();
   makeCalendarBoxes(currentYear, currentMonth);
-
-  //   document.querySelector("body").innerText =
-  //     `${getGreeting()} - there are ${daysData.length} known days`;
 };
