@@ -6,7 +6,10 @@ const now = new Date();
 const currentYear = now.getFullYear();
 const currentMonth = now.getMonth();
 
-const currentMonthName = MONTH_NAMES[currentMonth];
+const state = {
+  year: currentYear,
+  month: currentMonth,
+};
 
 function showHeader(year, monthName) {
   const header = document.createElement("h1");
@@ -48,8 +51,50 @@ function makeCalendarBoxes(year, month) {
   }
 }
 
-window.onload = function () {
-  showHeader(currentYear, currentMonthName);
+function makeNavButtons() {
+  const prevNextDiv = document.createElement("div");
+  prevNextDiv.classList.add("nav-buttons");
+
+  const prevButton = document.createElement("button");
+  prevButton.textContent = "Prev";
+  prevButton.setAttribute("aria-label", "Previous month");
+  prevNextDiv.appendChild(prevButton);
+  prevButton.addEventListener("click", handlePrevClick);
+
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "Next";
+  nextButton.setAttribute("aria-label", "Next month");
+  prevNextDiv.appendChild(nextButton);
+  nextButton.addEventListener("click", handleNextClick);
+
+  calendar.before(prevNextDiv);
+}
+
+function handleNextClick() {
+  state.month++;
+  if (state.month > 11) {
+    state.year++;
+    state.month = 0;
+  }
+  render();
+}
+
+function handlePrevClick() {
+  state.month--;
+  if (state.month < 0) {
+    state.year--;
+    state.month = 11;
+  }
+  render();
+}
+
+function render() {
+  calendar.innerHTML = "";
+  showHeader(state.year, MONTH_NAMES[state.month]);
   makeWeekDayBoxes();
-  makeCalendarBoxes(currentYear, currentMonth);
+  makeCalendarBoxes(state.year, state.month);
+}
+window.onload = function () {
+  render();
+  makeNavButtons();
 };
