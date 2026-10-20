@@ -88,13 +88,28 @@ function handlePrevClick() {
   render();
 }
 
+function makeMonthSelect() {
+  const monthSelect = document.createElement("select");
+  monthSelect.setAttribute("aria-label", "Month");
+  MONTH_NAMES.forEach((month, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = month;
+    monthSelect.appendChild(option);
+  });
+  calendar.before(monthSelect);
+}
+
 function render() {
   calendar.innerHTML = "";
   showHeader(state.year, MONTH_NAMES[state.month]);
   makeWeekDayBoxes();
   makeCalendarBoxes(state.year, state.month);
 }
+
 window.onload = function () {
   render();
   makeNavButtons();
+  makeMonthSelect();
+  makeDaySelect();
 };
