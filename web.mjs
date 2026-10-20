@@ -99,6 +99,22 @@ function makeMonthSelect() {
   });
   calendar.before(monthSelect);
 }
+function makeYearSelect() {
+  const yearSelect = document.createElement("select");
+  yearSelect.setAttribute("aria-label", "Year");
+
+  const firstYear = 1900;
+  const lastYear = 2100;
+
+  for (let year = firstYear; year <= lastYear; year++) {
+    const option = document.createElement("option");
+    option.value = year;
+    option.textContent = year;
+    yearSelect.appendChild(option);
+  }
+
+  calendar.before(yearSelect);
+}
 
 function render() {
   calendar.innerHTML = "";
@@ -111,5 +127,5 @@ window.onload = function () {
   render();
   makeNavButtons();
   makeMonthSelect();
-  makeDaySelect();
+  makeYearSelect();
 };
