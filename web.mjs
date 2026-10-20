@@ -56,13 +56,21 @@ function makeNavButtons() {
   prevButton.textContent = "Prev";
   prevButton.setAttribute("aria-label", "Previous month");
   prevNextDiv.appendChild(prevButton);
+  prevButton.addEventListener("click", handlePrevClick);
 
   const nextButton = document.createElement("button");
   nextButton.textContent = "Next";
   nextButton.setAttribute("aria-label", "Next month");
   prevNextDiv.appendChild(nextButton);
+  nextButton.addEventListener("click", handleNextClick);
 
   calendar.before(prevNextDiv);
+}
+function handlePrevClick() {
+  console.log("Prev clicked");
+}
+function handleNextClick() {
+  console.log("Nex clicked");
 }
 window.onload = function () {
   showHeader(currentYear, currentMonthName);
