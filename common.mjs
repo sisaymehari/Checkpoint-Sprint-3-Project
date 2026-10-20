@@ -25,6 +25,11 @@ export const DAY_NAMES = [
 
 const OCCURRENCES = ["first", "second", "third", "fourth"];
 
+/*
+  Finds the date of a rule like "second Tuesday of October" in a given year.
+  Example: getDayOfMonth(2020, "October", "Tuesday", "second") 
+  Returns → 13
+ */
 export function getDayOfMonth(year, monthName, dayName, occurrence) {
   const month = MONTH_NAMES.indexOf(monthName);
   const weekday = DAY_NAMES.indexOf(dayName);
@@ -39,7 +44,11 @@ export function getDayOfMonth(year, monthName, dayName, occurrence) {
   const daysForward = (weekday - firstWeekday + 7) % 7;
   return 1 + daysForward + 7 * OCCURRENCES.indexOf(occurrence);
 }
-
+/*
+  Lists the commemorative days of one month, with their dates in a given year.
+  Example: getCommemorativeDays(2024, "October", daysData)
+  Returns  → [{ name: "Ada Lovelace Day", day: 8 }, { name: "World Lemur Day", day: 25 }]
+ */
 export function getCommemorativeDays(year, monthName, days) {
   return days
     .filter((day) => day.monthName === monthName)
@@ -48,7 +57,12 @@ export function getCommemorativeDays(year, monthName, days) {
       day: getDayOfMonth(year, day.monthName, day.dayName, day.occurrence),
     }));
 }
-
+/*
+  Lists every commemorative day for every year in a range, with full dates.
+  Used by generate-ical.mjs to make the days.ics file.
+  Example: getAllEvents(2020, 2030, daysData)
+  Returns → [{ name: "Ada Lovelace Day", date: "2020-10-13" }, ...]
+ */
 export function getAllEvents(firstYear, lastYear, days) {
   const events = [];
 
@@ -59,12 +73,12 @@ export function getAllEvents(firstYear, lastYear, days) {
         year,
         day.monthName,
         day.dayName,
-        day.occurrence
+        day.occurrence,
       );
       events.push({
         name: day.name,
         date: `${year}-${String(month).padStart(2, "0")}-${String(
-          dayOfMonth
+          dayOfMonth,
         ).padStart(2, "0")}`,
       });
     });

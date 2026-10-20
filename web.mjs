@@ -8,12 +8,17 @@ const currentMonth = now.getMonth();
 
 const currentMonthName = MONTH_NAMES[currentMonth];
 
+/*
+  Shows the month and year as the page heading, e.g. "October 2026".
+*/
 function showHeader(year, monthName) {
   const header = document.createElement("h1");
   calendar.appendChild(header);
   header.textContent = `${monthName} ${year}`;
 }
-
+/*
+  Shows the row of weekday names (Sunday to Saturday) above the calendar.
+ */
 function makeWeekDayBoxes() {
   const weekRow = document.createElement("div");
   weekRow.classList.add("week-row");
@@ -27,6 +32,11 @@ function makeWeekDayBoxes() {
   });
 }
 
+/*
+  Shows one box per day of the month, with empty boxes before the 1st
+  so that each day sits under the correct weekday.
+  Month is 0-based (January = 0).
+ */
 function makeCalendarBoxes(year, month) {
   const boxesContainer = document.createElement("div");
   boxesContainer.classList.add("boxes-container");
