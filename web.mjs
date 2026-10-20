@@ -5,6 +5,8 @@ const calendar = document.querySelector("#calendar");
 const now = new Date();
 const currentYear = now.getFullYear();
 const currentMonth = now.getMonth();
+let shownYear = currentYear;
+let shownMonth = currentMonth;
 
 const currentMonthName = MONTH_NAMES[currentMonth];
 
@@ -66,12 +68,23 @@ function makeNavButtons() {
 
   calendar.before(prevNextDiv);
 }
-function handlePrevClick() {
-  console.log("Prev clicked");
-}
+
 function handleNextClick() {
-  console.log("Nex clicked");
+  shownMonth++;
+  if (shownMonth > 11) {
+    shownYear++;
+    shownMonth = 0;
+  }
 }
+
+function handlePrevClick() {
+  shownMonth--;
+  if (shownMonth < 0) {
+    shownYear--;
+    shownMonth = 11;
+  }
+}
+
 window.onload = function () {
   showHeader(currentYear, currentMonthName);
   makeWeekDayBoxes();
