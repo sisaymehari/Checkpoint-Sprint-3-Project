@@ -48,8 +48,25 @@ function makeCalendarBoxes(year, month) {
   }
 }
 
+function makeNavButtons() {
+  const prevNextDiv = document.createElement("div");
+  prevNextDiv.classList.add("nav-buttons");
+
+  const prevButton = document.createElement("button");
+  prevButton.textContent = "Prev";
+  prevButton.setAttribute("aria-label", "Previous month");
+  prevNextDiv.appendChild(prevButton);
+
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "Next";
+  nextButton.setAttribute("aria-label", "Next month");
+  prevNextDiv.appendChild(nextButton);
+
+  calendar.before(prevNextDiv);
+}
 window.onload = function () {
   showHeader(currentYear, currentMonthName);
   makeWeekDayBoxes();
   makeCalendarBoxes(currentYear, currentMonth);
+  makeNavButtons();
 };
