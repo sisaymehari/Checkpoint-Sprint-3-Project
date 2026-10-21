@@ -97,6 +97,7 @@ function makeMonthSelect() {
     option.textContent = month;
     monthSelect.appendChild(option);
   });
+  monthSelect.addEventListener("change", handleMonthChange);
   return monthSelect;
 }
 function makeYearSelect() {
@@ -113,8 +114,21 @@ function makeYearSelect() {
     option.textContent = year;
     yearSelect.appendChild(option);
   }
+  yearSelect.addEventListener("change", handleYearChange);
 
   return yearSelect;
+}
+
+function handleMonthChange() {
+  const monthSelect = document.querySelector("#month-select");
+  state.month = Number(monthSelect.value);
+  render();
+}
+
+function handleYearChange() {
+  const yearSelect = document.querySelector("#year-select");
+  state.year = Number(yearSelect.value);
+  render();
 }
 
 function makeControls() {
