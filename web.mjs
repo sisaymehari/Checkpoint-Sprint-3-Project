@@ -66,8 +66,7 @@ function makeNavButtons() {
   nextButton.setAttribute("aria-label", "Next month");
   prevNextDiv.appendChild(nextButton);
   nextButton.addEventListener("click", handleNextClick);
-
-  calendar.before(prevNextDiv);
+  return prevNextDiv;
 }
 
 function handleNextClick() {
@@ -90,6 +89,7 @@ function handlePrevClick() {
 
 function makeMonthSelect() {
   const monthSelect = document.createElement("select");
+  monthSelect.id = "month-select";
   monthSelect.setAttribute("aria-label", "Month");
   MONTH_NAMES.forEach((month, index) => {
     const option = document.createElement("option");
@@ -97,10 +97,11 @@ function makeMonthSelect() {
     option.textContent = month;
     monthSelect.appendChild(option);
   });
-  calendar.before(monthSelect);
+  return monthSelect;
 }
 function makeYearSelect() {
   const yearSelect = document.createElement("select");
+  yearSelect.id = "year-select";
   yearSelect.setAttribute("aria-label", "Year");
 
   const firstYear = 1900;
@@ -113,7 +114,22 @@ function makeYearSelect() {
     yearSelect.appendChild(option);
   }
 
-  calendar.before(yearSelect);
+  return yearSelect;
+}
+
+function makeControls() {
+  const controls = document.createElement("div");
+  controls.classList.add("controls");
+
+  const selects = document.createElement("div");
+  selects.classList.add("selects");
+  selects.appendChild(makeMonthSelect());
+  selects.appendChild(makeYearSelect());
+
+  controls.appendChild(selects);
+  controls.appendChild(makeNavButtons());
+
+  calendar.before(controls);
 }
 
 function render() {
@@ -121,11 +137,13 @@ function render() {
   showHeader(state.year, MONTH_NAMES[state.month]);
   makeWeekDayBoxes();
   makeCalendarBoxes(state.year, state.month);
+  const yearSelect = document.querySelector("#year-select");
+  yearSelect.value = state.year;
+  const monthSelect = document.querySelector("#month-select");
+  monthSelect.value = state.month;
 }
 
 window.onload = function () {
+  makeControls();
   render();
-  makeNavButtons();
-  makeMonthSelect();
-  makeYearSelect();
 };
