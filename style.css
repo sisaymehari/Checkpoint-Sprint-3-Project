@@ -7,3 +7,12 @@
 .day-box {
   border: 1px solid black;
 }
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+.nav-buttons,
+.selects {
+  display: flex;
+  gap: 10px;
+}
