@@ -65,7 +65,7 @@ function makeNavButtons() {
   navButtons.classList.add("nav-buttons");
 
   const prevButton = document.createElement("button");
-  prevButton.textContent = "Prev";
+  prevButton.textContent = "Previous";
   prevButton.setAttribute("aria-label", "Previous month");
   navButtons.appendChild(prevButton);
   prevButton.addEventListener("click", handlePrevClick);
