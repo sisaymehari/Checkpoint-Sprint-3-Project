@@ -1,8 +1,8 @@
 import { writeFileSync } from "node:fs";
-import { getAllEvents } from "./common.mjs";
+import { getEventsForYears } from "./common.mjs";
 import daysData from "./days.json" with { type: "json" };
 
-const events = getAllEvents(2020, 2030, daysData);
+const events = getEventsForYears(2020, 2030, daysData);
 const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
 
 const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Days Calendar//EN"];

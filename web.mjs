@@ -30,7 +30,7 @@ function makeWeekDayBoxes() {
   });
 }
 
-function makeCalendarBoxes(year, month) {
+function makeDayBoxes(year, month) {
   const boxesContainer = document.createElement("div");
   boxesContainer.classList.add("boxes-container");
   calendar.appendChild(boxesContainer);
@@ -43,37 +43,40 @@ function makeCalendarBoxes(year, month) {
     emptyBox.classList.add("empty-box");
     boxesContainer.appendChild(emptyBox);
   }
-  for (let i = 1; i <= dayCount; i++) {
+  for (let dayNumber = 1; dayNumber <= dayCount; dayNumber++) {
     const dayBox = document.createElement("div");
     dayBox.classList.add("day-box");
-    dayBox.textContent = i;
-    const specialDay = specialDays.find((specialDay) => specialDay.day === i);
+    dayBox.textContent = dayNumber;
+    const specialDay = specialDays.find(
+      (specialDay) => specialDay.day === dayNumber,
+    );
     if (specialDay) {
-      const specialDayDiv = document.createElement("div");
-      specialDayDiv.classList.add("special-day");
-      specialDayDiv.textContent = specialDay.name;
-      dayBox.appendChild(specialDayDiv);
+      const specialDayLabel = document.createElement("div");
+      specialDayLabel.classList.add("special-day");
+      specialDayLabel.textContent = specialDay.name;
+      dayBox.appendChild(specialDayLabel);
     }
     boxesContainer.appendChild(dayBox);
   }
 }
 
 function makeNavButtons() {
-  const prevNextDiv = document.createElement("div");
-  prevNextDiv.classList.add("nav-buttons");
+  const navButtons = document.createElement("div");
+  navButtons.classList.add("nav-buttons");
 
   const prevButton = document.createElement("button");
   prevButton.textContent = "Prev";
   prevButton.setAttribute("aria-label", "Previous month");
-  prevNextDiv.appendChild(prevButton);
+  navButtons.appendChild(prevButton);
   prevButton.addEventListener("click", handlePrevClick);
 
   const nextButton = document.createElement("button");
   nextButton.textContent = "Next";
   nextButton.setAttribute("aria-label", "Next month");
-  prevNextDiv.appendChild(nextButton);
+  navButtons.appendChild(nextButton);
   nextButton.addEventListener("click", handleNextClick);
-  return prevNextDiv;
+
+  return navButtons;
 }
 
 function handleNextClick() {
@@ -107,6 +110,7 @@ function makeMonthSelect() {
   monthSelect.addEventListener("change", handleMonthChange);
   return monthSelect;
 }
+
 function fillYearOptions() {
   const yearSelect = document.querySelector("#year-select");
   yearSelect.innerHTML = "";
@@ -120,6 +124,7 @@ function fillYearOptions() {
     yearSelect.appendChild(option);
   }
 }
+
 function makeYearSelect() {
   const yearSelect = document.createElement("select");
   yearSelect.id = "year-select";
@@ -159,7 +164,7 @@ function render() {
   calendar.innerHTML = "";
   showHeader(state.year, MONTH_NAMES[state.month]);
   makeWeekDayBoxes();
-  makeCalendarBoxes(state.year, state.month);
+  makeDayBoxes(state.year, state.month);
   fillYearOptions();
   const yearSelect = document.querySelector("#year-select");
   yearSelect.value = state.year;
