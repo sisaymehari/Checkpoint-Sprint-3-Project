@@ -1,5 +1,5 @@
 import daysData from "./days.json" with { type: "json" };
-import { MONTH_NAMES, DAY_NAMES } from "./common.mjs";
+import { MONTH_NAMES, DAY_NAMES, getCommemorativeDays } from "./common.mjs";
 const calendar = document.querySelector("#calendar");
 
 const now = new Date();
@@ -37,7 +37,7 @@ function makeCalendarBoxes(year, month) {
 
   const emptyBoxCount = new Date(year, month, 1).getDay();
   const dayCount = new Date(year, month + 1, 0).getDate();
-
+  const specialDays = getCommemorativeDays(year, MONTH_NAMES[month], daysData);
   for (let i = 1; i <= emptyBoxCount; i++) {
     const emptyBox = document.createElement("div");
     emptyBox.classList.add("empty-box");
@@ -47,6 +47,13 @@ function makeCalendarBoxes(year, month) {
     const dayBox = document.createElement("div");
     dayBox.classList.add("day-box");
     dayBox.textContent = i;
+    const specialDay = specialDays.find((specialDay) => specialDay.day === i);
+    if (specialDay) {
+      const specialDayDiv = document.createElement("div");
+      specialDayDiv.classList.add("special-day");
+      specialDayDiv.textContent = specialDay.name;
+      dayBox.appendChild(specialDayDiv);
+    }
     boxesContainer.appendChild(dayBox);
   }
 }
