@@ -6,6 +6,17 @@
 .empty-box,
 .day-box {
   border: 1px solid black;
+  height: 100px;
+}
+.day-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.special-day {
+  font-size: 1em;
+  font-weight: bold;
+  color: darkred;
 }
 .controls {
   display: flex;
