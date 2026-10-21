@@ -3,6 +3,11 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
+.week-day-box {
+  text-align: center;
+  font-weight: bold;
+  padding: 4px 0;
+}
 .empty-box,
 .day-box {
   border: 1px solid black;
