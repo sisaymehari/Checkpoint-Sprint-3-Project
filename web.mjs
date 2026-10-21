@@ -100,22 +100,24 @@ function makeMonthSelect() {
   monthSelect.addEventListener("change", handleMonthChange);
   return monthSelect;
 }
-function makeYearSelect() {
-  const yearSelect = document.createElement("select");
-  yearSelect.id = "year-select";
-  yearSelect.setAttribute("aria-label", "Year");
+function fillYearOptions() {
+  const yearSelect = document.querySelector("#year-select");
+  yearSelect.innerHTML = "";
 
-  const firstYear = 1900;
-  const lastYear = 2100;
-
+  const firstYear = state.year - 100;
+  const lastYear = state.year + 100;
   for (let year = firstYear; year <= lastYear; year++) {
     const option = document.createElement("option");
     option.value = year;
     option.textContent = year;
     yearSelect.appendChild(option);
   }
+}
+function makeYearSelect() {
+  const yearSelect = document.createElement("select");
+  yearSelect.id = "year-select";
+  yearSelect.setAttribute("aria-label", "Year");
   yearSelect.addEventListener("change", handleYearChange);
-
   return yearSelect;
 }
 
@@ -151,6 +153,7 @@ function render() {
   showHeader(state.year, MONTH_NAMES[state.month]);
   makeWeekDayBoxes();
   makeCalendarBoxes(state.year, state.month);
+  fillYearOptions();
   const yearSelect = document.querySelector("#year-select");
   yearSelect.value = state.year;
   const monthSelect = document.querySelector("#month-select");
