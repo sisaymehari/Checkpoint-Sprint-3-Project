@@ -1,3 +1,5 @@
+// ====================== Setup and state  ======================
+
 import daysData from "./days.json" with { type: "json" };
 import { MONTH_NAMES, DAY_NAMES, getCommemorativeDays } from "./common.mjs";
 
@@ -13,6 +15,8 @@ const state = {
   year: currentYear,
   month: currentMonth,
 };
+
+// ====================== Drawing the calendar ======================
 
 // Shows the month and year as the page heading, e.g. "October 2026".
 function showHeader(year, monthName) {
@@ -67,43 +71,7 @@ function makeDayBoxes(year, month) {
   }
 }
 
-// Builds the Previous and Next buttons. The aria-labels give screen readers the full
-// names ("Previous month", "Next month").
-function makeNavButtons() {
-  const navButtons = document.createElement("div");
-  navButtons.classList.add("nav-buttons");
-  const prevButton = document.createElement("button");
-  prevButton.textContent = "Previous";
-  prevButton.setAttribute("aria-label", "Previous month");
-  navButtons.appendChild(prevButton);
-  prevButton.addEventListener("click", handlePrevClick);
-  const nextButton = document.createElement("button");
-  nextButton.textContent = "Next";
-  nextButton.setAttribute("aria-label", "Next month");
-  navButtons.appendChild(nextButton);
-  nextButton.addEventListener("click", handleNextClick);
-  return navButtons;
-}
-
-// Moves forward one month. After December, goes to January of the next year.
-function handleNextClick() {
-  state.month++;
-  if (state.month > 11) {
-    state.year++;
-    state.month = 0;
-  }
-  render();
-}
-
-// Moves back one month. Before January, goes to December of the previous year.
-function handlePrevClick() {
-  state.month--;
-  if (state.month < 0) {
-    state.year--;
-    state.month = 11;
-  }
-  render();
-}
+// ====================== Controls (made once) ======================
 
 // Builds the month dropdown. Each option's value is the month number (January = 0),
 // so it can go straight into state.month.
@@ -119,6 +87,15 @@ function makeMonthSelect() {
   });
   monthSelect.addEventListener("change", handleMonthChange);
   return monthSelect;
+}
+
+// Builds the empty year dropdown. Its options are added by fillYearOptions().
+function makeYearSelect() {
+  const yearSelect = document.createElement("select");
+  yearSelect.id = "year-select";
+  yearSelect.setAttribute("aria-label", "Year");
+  yearSelect.addEventListener("change", handleYearChange);
+  return yearSelect;
 }
 
 // Fills the year dropdown with 100 years before and after the shown year.
@@ -138,13 +115,58 @@ function fillYearOptions() {
   }
 }
 
-// Builds the empty year dropdown. Its options are added by fillYearOptions().
-function makeYearSelect() {
-  const yearSelect = document.createElement("select");
-  yearSelect.id = "year-select";
-  yearSelect.setAttribute("aria-label", "Year");
-  yearSelect.addEventListener("change", handleYearChange);
-  return yearSelect;
+// Builds the Previous and Next buttons. The aria-labels give screen readers the full
+// names ("Previous month", "Next month").
+function makeNavButtons() {
+  const navButtons = document.createElement("div");
+  navButtons.classList.add("nav-buttons");
+  const prevButton = document.createElement("button");
+  prevButton.textContent = "Previous";
+  prevButton.setAttribute("aria-label", "Previous month");
+  navButtons.appendChild(prevButton);
+  prevButton.addEventListener("click", handlePrevClick);
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "Next";
+  nextButton.setAttribute("aria-label", "Next month");
+  navButtons.appendChild(nextButton);
+  nextButton.addEventListener("click", handleNextClick);
+  return navButtons;
+}
+
+// Builds the dropdowns and buttons above the calendar. Called once, outside #calendar,
+// so render() can redraw the calendar without deleting them.
+function makeControls() {
+  const controls = document.createElement("div");
+  controls.classList.add("controls");
+  const selects = document.createElement("div");
+  selects.classList.add("selects");
+  selects.appendChild(makeMonthSelect());
+  selects.appendChild(makeYearSelect());
+  controls.appendChild(selects);
+  controls.appendChild(makeNavButtons());
+  calendar.before(controls);
+}
+
+// ======================= Event handlers =======================
+
+// Moves back one month. Before January, goes to December of the previous year.
+function handlePrevClick() {
+  state.month--;
+  if (state.month < 0) {
+    state.year--;
+    state.month = 11;
+  }
+  render();
+}
+
+// Moves forward one month. After December, goes to January of the next year.
+function handleNextClick() {
+  state.month++;
+  if (state.month > 11) {
+    state.year++;
+    state.month = 0;
+  }
+  render();
 }
 
 // Jumps to the month picked in the dropdown. Number() is needed because
@@ -162,19 +184,7 @@ function handleYearChange() {
   render();
 }
 
-// Builds the dropdowns and buttons above the calendar. Called once, outside #calendar,
-// so render() can redraw the calendar without deleting them.
-function makeControls() {
-  const controls = document.createElement("div");
-  controls.classList.add("controls");
-  const selects = document.createElement("div");
-  selects.classList.add("selects");
-  selects.appendChild(makeMonthSelect());
-  selects.appendChild(makeYearSelect());
-  controls.appendChild(selects);
-  controls.appendChild(makeNavButtons());
-  calendar.before(controls);
-}
+// ==================== Render and start ====================
 
 // Draws everything from the state: erases the calendar, redraws the heading, weekday
 // row and day boxes, then makes the dropdowns show the same month and year.

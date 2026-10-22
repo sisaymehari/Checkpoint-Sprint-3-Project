@@ -28,7 +28,7 @@ export const DAY_NAMES = [
 const OCCURRENCES = ["first", "second", "third", "fourth"];
 
 // Finds the day of the month for a rule like "second Tuesday of October".
-// Takes the year, month name, weekday name and occurrence ("first" to "fourth or last").
+// Takes the year, month name, weekday name and occurrence ("first" to "fourth", or "last").
 // Uses UTC dates so clock changes (summer time) can never move the date by one day.
 // Returns the day number (1-31).
 export function getDateFromRule(year, monthName, dayName, occurrence) {
