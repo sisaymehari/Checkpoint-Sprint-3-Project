@@ -47,15 +47,15 @@ function makeDayBoxes(year, month) {
     const dayBox = document.createElement("div");
     dayBox.classList.add("day-box");
     dayBox.textContent = dayNumber;
-    const specialDay = specialDays.find(
+    const specialDaysToday = specialDays.filter(
       (specialDay) => specialDay.day === dayNumber,
     );
-    if (specialDay) {
+    specialDaysToday.forEach((specialDay) => {
       const specialDayLabel = document.createElement("div");
       specialDayLabel.classList.add("special-day");
       specialDayLabel.textContent = specialDay.name;
       dayBox.appendChild(specialDayLabel);
-    }
+    });
     boxesContainer.appendChild(dayBox);
   }
 }
